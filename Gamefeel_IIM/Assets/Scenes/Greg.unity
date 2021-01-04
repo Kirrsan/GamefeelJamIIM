@@ -461,11 +461,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 7708470637651245060, guid: 6e5c349e362418b45914535194d65d29,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e5c349e362418b45914535194d65d29, type: 3}
 --- !u!1 &1673713627
@@ -505,6 +500,8 @@ MonoBehaviour:
   speedHorizontal: 1
   speedVertical: 1
   timeBetweenMovement: 1
+  minimumTimeToShootAgain: 1
+  maximumTimeToShootAgain: 4
 --- !u!4 &1673713629
 Transform:
   m_ObjectHideFlags: 0
@@ -513,7 +510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1673713627}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.91, y: 3.25, z: 0}
+  m_LocalPosition: {x: -7.5, y: 5.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
