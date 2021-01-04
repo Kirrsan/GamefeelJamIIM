@@ -5,21 +5,35 @@ using UnityEngine;
 
 public class Enemies : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] Bullet bulletPrefab;
+    [SerializeField] float bulletPositionOffset;
 
-    // Update is called once per frame
-    void Update()
+    private int columnNumber = 0;
+    private int rowNumber = 0;
+
+    public void SetIds(int tempColumnNumber, int tempRowNumber)
     {
-        
+        columnNumber = tempColumnNumber;
+        rowNumber = tempRowNumber;
+    }
+    
+    public void Shoot()
+    {
+        Bullet bullet = bulletPrefab;
+        bullet.transform.position = new Vector2(transform.position.x, transform.position.y - bulletPositionOffset);
+        bullet.SetDirection(false);
+        Instantiate(bullet);
     }
 
     public void DestroyEnemy()
     {
         Debug.Log("Enemy destroyed");
+
+        //what if the enemies move on the bullet while at row 0 ?
+        if (rowNumber == 0)
+        {
+            GameManager.Instance.pack.RemoveColumn(columnNumber);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

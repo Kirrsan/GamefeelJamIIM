@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyPack : MonoBehaviour
 {
@@ -14,33 +15,55 @@ public class EnemyPack : MonoBehaviour
 
     public GameObject Enemy;
 
-    private Enemies[,] _enemies2DArray;
+    private List<Enemies[]> _enemies2DArray;
     
     [Header("Enemies parameters")]
     public float speedHorizontal;
     public float speedVertical;
+    public float delayBeforeGoingDown = 0.4f;
     public float timeBetweenMovement;
+    
+    
+    
     private float _timer = 0;
     
-    private float Orientation = 1; //1 = right, -1 = left
+    private float _orientation = 1; //1 = right, -1 = left
 
     private bool _hasMovedDown = false;
+    
+    private int _randomColumnShooting = 0;
+    private float _randomShootingTimer = 0;
+
+    private bool _canShootTimerGoDown = false;
+    
+    public float minimumTimeToShootAgain = 1;
+    public float maximumTimeToShootAgain = 5;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        _enemies2DArray = new Enemies[numberOfColumns,numberOfRows];
-        
-        for (int i = 0; i < numberOfRows; i++)
+        _enemies2DArray = new List<Enemies[]>();
+   
+        for (int i = 0; i < numberOfColumns; i++)
         {
-            for (int j = 0; j < numberOfColumns; j++)
+            Enemies[] enemiesColumn = new Enemies[numberOfRows];
+            for (int j = 0; j < numberOfRows; j++)
             {
-                GameObject newEnemy = GameObject.Instantiate(Enemy, new Vector2(transform.localPosition.x + offsetX * j, transform.localPosition.y - offsetY * i), quaternion.identity, this.transform);
-                newEnemy.name = "Enemy " + j + " " + i;
-                _enemies2DArray[j, i] = newEnemy.GetComponent<Enemies>();
-                Debug.Log(_enemies2DArray[j,i].name);
+                GameObject newEnemy = GameObject.Instantiate(Enemy, new Vector2(transform.localPosition.x + offsetX * i, transform.localPosition.y - offsetY * j), quaternion.identity, this.transform);
+                newEnemy.name = "Enemy " + i + " " + j;
+                enemiesColumn[j] = newEnemy.GetComponent<Enemies>();
+                enemiesColumn[j].SetIds(i,j);
             }
+            _enemies2DArray.Add(enemiesColumn);
         }
+
+        SetNewShootingTimer();
+    }
+
+    public void RemoveColumn(int columnId)
+    {
+        _enemies2DArray.Remove(_enemies2DArray[columnId]);
     }
 
     // Update is called once per frame
@@ -54,11 +77,52 @@ public class EnemyPack : MonoBehaviour
             Debug.Log("Timer down");
             Debug.Log(_timer);
         }
+
+        if (!_canShootTimerGoDown) return;
+        _randomShootingTimer -= Time.deltaTime;
+
+        if (_randomShootingTimer <= 0)
+        {
+            _canShootTimerGoDown = false;
+            Shoot();
+        }
     }
 
+    public void Shoot()
+    {
+        _randomColumnShooting = Random.Range(0, _enemies2DArray.Count);
+        
+        Enemies enemyShooting = null;
+        for (int i = 0; i < _enemies2DArray[_randomColumnShooting].Length; i++)
+        {
+            if (_enemies2DArray[_randomColumnShooting][i] != null)
+            {
+                enemyShooting = _enemies2DArray[_randomColumnShooting][i];
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (enemyShooting != null)
+        {
+            enemyShooting.Shoot();
+        }
+
+        SetNewShootingTimer();
+    }
+
+    public void SetNewShootingTimer()
+    {
+        _randomShootingTimer = Random.Range(minimumTimeToShootAgain, maximumTimeToShootAgain);
+        _canShootTimerGoDown = true;
+    }
+
+    #region Move
     private void Move()
     {
-        transform.position = new Vector2(transform.position.x + speedHorizontal * Orientation, transform.position.y);
+        transform.position = new Vector2(transform.position.x + speedHorizontal * _orientation, transform.position.y);
         
         if (!_hasMovedDown) return;
         
@@ -68,21 +132,28 @@ public class EnemyPack : MonoBehaviour
     public void MoveDown()
     {
         if (_hasMovedDown) return;
+        _hasMovedDown = true;
+        StartCoroutine(MoveDownCoroutine());
+    }
+    
+    private IEnumerator MoveDownCoroutine()
+    {
+        yield return new WaitForSeconds(delayBeforeGoingDown);
         
         transform.position = new Vector2(transform.position.x, transform.position.y - speedVertical);
-        _hasMovedDown = true;
         ChangeDirection();
     }
 
     private void ChangeDirection()
     {
-        if (Orientation == 1)
+        if (_orientation == 1)
         {
-            Orientation = -1;
+            _orientation = -1;
         }
         else
         {
-            Orientation = 1;
+            _orientation = 1;
         }
     }
+    #endregion
 }
