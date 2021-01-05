@@ -42,14 +42,11 @@ public class Enemies : MonoBehaviour
         if (other.CompareTag("Wall"))
         {
             GameManager.Instance.pack.MoveDown();
-            Debug.Log("walltouched");
+            //Debug.Log("walltouched");
         }
         else if (other.CompareTag("Player"))
         {
-            //restart the game
-            
-            // GameManager.Instance.Lost();
-            Debug.Log(("Lost"));
+            GameManager.Instance.loseGame();
         }
     }
 }
