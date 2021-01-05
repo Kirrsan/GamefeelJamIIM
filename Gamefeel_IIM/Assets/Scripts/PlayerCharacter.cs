@@ -53,5 +53,6 @@ public class PlayerCharacter : MonoBehaviour
         }
         Bullet bullet = Instantiate(bulletPrefab);
         bullet.transform.position = new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
+        bullet.SetDirection(true);
     }
 }

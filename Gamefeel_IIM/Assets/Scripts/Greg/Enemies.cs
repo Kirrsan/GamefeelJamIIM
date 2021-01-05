@@ -19,10 +19,9 @@ public class Enemies : MonoBehaviour
     
     public void Shoot()
     {
-        Bullet bullet = bulletPrefab;
+        Bullet bullet = Instantiate(bulletPrefab);
         bullet.transform.position = new Vector2(transform.position.x, transform.position.y - bulletPositionOffset);
         bullet.SetDirection(false);
-        Instantiate(bullet);
     }
 
     public void DestroyEnemy()
