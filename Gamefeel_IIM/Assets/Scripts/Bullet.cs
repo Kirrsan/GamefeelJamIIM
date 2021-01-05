@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         Vector2 newPos = transform.position;
-        newPos.y += speedBullet * Time.deltaTime;
+        newPos.y += speedBullet * Time.deltaTime * direction;
         transform.position = newPos;
     }
 
