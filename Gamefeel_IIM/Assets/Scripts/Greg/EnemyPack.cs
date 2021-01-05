@@ -53,17 +53,37 @@ public class EnemyPack : MonoBehaviour
                 GameObject newEnemy = GameObject.Instantiate(Enemy, new Vector2(transform.localPosition.x + offsetX * i, transform.localPosition.y - offsetY * j), quaternion.identity, this.transform);
                 newEnemy.name = "Enemy " + i + " " + j;
                 enemiesColumn[j] = newEnemy.GetComponent<Enemies>();
-                enemiesColumn[j].SetIds(i,j);
+                enemiesColumn[j].SetIds(i);
             }
             _enemies2DArray.Add(enemiesColumn);
         }
-
         SetNewShootingTimer();
     }
 
     public void RemoveColumn(int columnId)
     {
+        if (CheckIfStillEnemiesOnColumn(columnId)) return;
+        
+        for (int i = columnId+1; i < _enemies2DArray.Count; i++)
+        {
+            for (int j = 0; j < _enemies2DArray[i].Length; j++)
+            {
+                _enemies2DArray[i][j].ReduceColumnNumber();
+            }
+        }
         _enemies2DArray.Remove(_enemies2DArray[columnId]);
+    }
+
+    private bool CheckIfStillEnemiesOnColumn(int columnId)
+    {
+        for (int i = 0; i < _enemies2DArray[columnId].Length; i++)
+        {
+            if (_enemies2DArray[columnId][i] != null)
+            {
+                return true; 
+            }
+        }
+        return false;
     }
 
     // Update is called once per frame
@@ -98,10 +118,6 @@ public class EnemyPack : MonoBehaviour
             if (_enemies2DArray[_randomColumnShooting][i] != null)
             {
                 enemyShooting = _enemies2DArray[_randomColumnShooting][i];
-            }
-            else
-            {
-                break;
             }
         }
 

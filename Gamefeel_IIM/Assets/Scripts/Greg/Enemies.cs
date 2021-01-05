@@ -9,12 +9,15 @@ public class Enemies : MonoBehaviour
     [SerializeField] float bulletPositionOffset;
 
     private int columnNumber = 0;
-    private int rowNumber = 0;
 
-    public void SetIds(int tempColumnNumber, int tempRowNumber)
+    public void SetIds(int tempColumnNumber)
     {
         columnNumber = tempColumnNumber;
-        rowNumber = tempRowNumber;
+    }
+    
+    public void ReduceColumnNumber()
+    {
+        columnNumber -= 1;
     }
     
     public void Shoot()
@@ -27,12 +30,9 @@ public class Enemies : MonoBehaviour
     public void DestroyEnemy()
     {
         Debug.Log("Enemy destroyed");
-
-        //what if the enemies move on the bullet while at row 0 ?
-        if (rowNumber == 0)
-        {
-            GameManager.Instance.pack.RemoveColumn(columnNumber);
-        }
+        GameManager.Instance.pack.RemoveColumn(columnNumber);
+        
+        Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
