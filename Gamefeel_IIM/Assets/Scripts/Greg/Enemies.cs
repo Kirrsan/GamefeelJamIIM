@@ -9,10 +9,12 @@ public class Enemies : MonoBehaviour
     [SerializeField] float bulletPositionOffset;
 
     private int columnNumber = 0;
+    private int rowNumber = 0;
 
-    public void SetIds(int tempColumnNumber)
+    public void SetIds(int tempColumnNumber, int tempRowNumber)
     {
         columnNumber = tempColumnNumber;
+        rowNumber = tempRowNumber;
     }
     
     public void ReduceColumnNumber()
@@ -30,7 +32,7 @@ public class Enemies : MonoBehaviour
     public void DestroyEnemy()
     {
         Debug.Log("Enemy destroyed");
-        GameManager.Instance.pack.RemoveColumn(columnNumber);
+        GameManager.Instance.pack.RemoveColumn(columnNumber, rowNumber);
         
         Destroy(this.gameObject);
     }

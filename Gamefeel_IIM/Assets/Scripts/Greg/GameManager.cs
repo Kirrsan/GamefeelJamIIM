@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
     private int currentScore = 0;
 
     public GameObject winPanel;
+    public Button winButton;
     public GameObject losePanel;
-    
+    public Button loseButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+        
+        winButton.onClick.AddListener(() => resetGame());
+        loseButton.onClick.AddListener(() => resetGame());
     }
 
     public void winGame()

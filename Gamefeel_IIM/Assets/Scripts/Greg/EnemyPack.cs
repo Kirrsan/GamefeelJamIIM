@@ -35,6 +35,7 @@ public class EnemyPack : MonoBehaviour
     private float _randomShootingTimer = 0;
 
     private bool _canShootTimerGoDown = false;
+    private int numberOfEnemies = 0;
     
     public float minimumTimeToShootAgain = 1;
     public float maximumTimeToShootAgain = 5;
@@ -53,25 +54,42 @@ public class EnemyPack : MonoBehaviour
                 GameObject newEnemy = GameObject.Instantiate(Enemy, new Vector2(transform.localPosition.x + offsetX * i, transform.localPosition.y - offsetY * j), quaternion.identity, this.transform);
                 newEnemy.name = "Enemy " + i + " " + j;
                 enemiesColumn[j] = newEnemy.GetComponent<Enemies>();
-                enemiesColumn[j].SetIds(i);
+                enemiesColumn[j].SetIds(i, j);
             }
             _enemies2DArray.Add(enemiesColumn);
         }
+
+        numberOfEnemies = numberOfColumns * numberOfRows;
+        
         SetNewShootingTimer();
     }
 
-    public void RemoveColumn(int columnId)
+    public void RemoveColumn(int columnId, int rowID)
     {
+        _enemies2DArray[columnId][rowID] = null;
+        numberOfEnemies -= 1;
+        CheckIfWin();
+        
         if (CheckIfStillEnemiesOnColumn(columnId)) return;
         
         for (int i = columnId+1; i < _enemies2DArray.Count; i++)
         {
             for (int j = 0; j < _enemies2DArray[i].Length; j++)
             {
-                _enemies2DArray[i][j].ReduceColumnNumber();
+                if (_enemies2DArray[i][j] != null)
+                {
+                    _enemies2DArray[i][j].ReduceColumnNumber();
+                }
             }
         }
         _enemies2DArray.Remove(_enemies2DArray[columnId]);
+    }
+
+    private void CheckIfWin()
+    {
+        if (numberOfEnemies > 0) return;
+        
+        GameManager.Instance.winGame();
     }
 
     private bool CheckIfStillEnemiesOnColumn(int columnId)
