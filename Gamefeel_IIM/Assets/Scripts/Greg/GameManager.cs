@@ -43,7 +43,8 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int scoreToAdd)
     {
-        score.text = (currentScore + scoreToAdd).ToString();
+        currentScore += scoreToAdd;
+        score.text = currentScore.ToString();
     }
 
     public void ResetScore()
