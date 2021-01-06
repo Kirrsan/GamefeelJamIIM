@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6186464993611200720}
   - component: {fileID: 574888173509248570}
   m_Layer: 0
-  m_Name: Sparks
+  m_Name: SparksLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6856435389744855723}
-  m_LocalRotation: {x: -0.19803156, y: 0.6788104, z: -0.6788104, w: 0.19803156}
-  m_LocalPosition: {x: 1.03, y: -3.19, z: -5.634032}
+  m_LocalRotation: {x: -0.15304591, y: -0.6903455, z: 0.6903455, w: 0.15304591}
+  m_LocalPosition: {x: 0, y: 0, z: -5.634032}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -237.473, y: -90, z: 89.99999}
+  m_LocalEulerAnglesHint: {x: 65, y: -90, z: 90}
 --- !u!198 &6186464993611200720
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -46,7 +46,7 @@ ParticleSystem:
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
