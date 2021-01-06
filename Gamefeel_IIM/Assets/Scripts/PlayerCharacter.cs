@@ -13,6 +13,11 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] float timeForLoadShoot = 3f;
 
     [SerializeField] float bulletPositionOffset = 1f;
+    
+    [Header("Bullet Rotation")]
+    [SerializeField] float spriteOffsetToCenterX;
+    [SerializeField] float spriteOffsetToCenterY;
+    [SerializeField] float rotationSpeed;
 
     // Update is called once per frame
     void Update()
@@ -54,5 +59,7 @@ public class PlayerCharacter : MonoBehaviour
         Bullet bullet = Instantiate(bulletPrefab);
         bullet.transform.position = new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
         bullet.SetDirection(true);
+        bullet.SetObjectFiring(true);
+        bullet.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
     }
 }

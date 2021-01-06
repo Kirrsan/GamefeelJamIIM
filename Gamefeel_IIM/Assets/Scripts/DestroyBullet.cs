@@ -7,6 +7,6 @@ public class DestroyBullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Bullet destruction");
-        Destroy(collision.gameObject);
+        Destroy(collision.gameObject.transform.parent.gameObject);
     }
 }

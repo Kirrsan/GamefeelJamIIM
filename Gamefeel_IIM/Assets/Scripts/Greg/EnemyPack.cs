@@ -22,6 +22,7 @@ public class EnemyPack : MonoBehaviour
     public float speedVertical;
     public float delayBeforeGoingDown = 0.4f;
     public float timeBetweenMovement;
+    public Vector2 enemyScale;
     
     
     
@@ -52,6 +53,7 @@ public class EnemyPack : MonoBehaviour
             for (int j = 0; j < numberOfRows; j++)
             {
                 GameObject newEnemy = GameObject.Instantiate(Enemy, new Vector2(transform.localPosition.x + offsetX * i, transform.localPosition.y - offsetY * j), quaternion.identity, this.transform);
+                newEnemy.transform.localScale = enemyScale;
                 newEnemy.name = "Enemy " + i + " " + j;
                 enemiesColumn[j] = newEnemy.GetComponent<Enemies>();
                 enemiesColumn[j].SetIds(i, j);
