@@ -24,6 +24,11 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] float shakeDuration = 1f;
     private Vector2 startPos;
 
+    public GameObject playerSprite;
+    [SerializeField] float recoilDuration = 1f;
+    [SerializeField] float maxRecoil = 0.2f;
+    [SerializeField] AnimationCurve recoilCurve;
+
     // Update is called once per frame
     void Update()
     {
@@ -75,6 +80,8 @@ public class PlayerCharacter : MonoBehaviour
         bullet.SetDirection(true);
         bullet.SetObjectFiring(true);
         bullet.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
+
+        StartCoroutine(ShootMovement());
     }
 
     IEnumerator ShakePlayer()
@@ -94,5 +101,18 @@ public class PlayerCharacter : MonoBehaviour
         }
 
         transform.position = startPos;
+    }
+
+    IEnumerator ShootMovement()
+    {
+        float timer = 0f;
+        while (timer < recoilDuration)
+        {
+            timer += Time.deltaTime;
+            Vector2 recoil = new Vector2(transform.position.x, transform.position.y - maxRecoil * recoilCurve.Evaluate(timer / recoilDuration));
+            playerSprite.transform.position = recoil;
+            yield return null;
+        }
+        playerSprite.transform.position = transform.position;
     }
 }
