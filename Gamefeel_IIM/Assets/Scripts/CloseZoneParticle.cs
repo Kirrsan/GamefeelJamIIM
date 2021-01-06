@@ -13,6 +13,7 @@ public class CloseZoneParticle : MonoBehaviour
             Vector2 position = this.gameObject.transform.position;
             GameObject particle = Instantiate(particlesPrefab);
             particle.transform.position = position;
+            UIManager.Instance.AddCrack();
             Destroy(particle, 2f);
         }
     }
