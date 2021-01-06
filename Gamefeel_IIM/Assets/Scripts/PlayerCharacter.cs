@@ -9,6 +9,8 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] float maxXPosition = 8f;
     [SerializeField] float timeBetweenShoot = 1f;
 
+
+    private bool canMove = true;
     private float shootTimer = 0f;
     [SerializeField] float timeForLoadShoot = 3f;
 
@@ -30,6 +32,11 @@ public class PlayerCharacter : MonoBehaviour
         shootTimer += Time.deltaTime;
     }
 
+    public void SwitchMode()
+    {
+        canMove = !canMove;
+    }
+    
 
     private void Start()
     {
@@ -94,5 +101,10 @@ public class PlayerCharacter : MonoBehaviour
         }
 
         transform.position = startPos;
+    }
+
+    public bool GetCanMove()
+    {
+        return canMove;
     }
 }
