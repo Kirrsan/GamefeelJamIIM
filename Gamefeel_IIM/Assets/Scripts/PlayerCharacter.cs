@@ -14,11 +14,25 @@ public class PlayerCharacter : MonoBehaviour
 
     [SerializeField] float bulletPositionOffset = 1f;
 
+    [SerializeField] AnimationCurve shakeIntensityCurve;
+    [SerializeField] float maxShakeIntensity = 0.05f;
+    [SerializeField] float shakeDuration = 1f;
+    private Vector2 startPos;
+
     // Update is called once per frame
     void Update()
     {
         shootTimer += Time.deltaTime;
     }
+
+
+    private void Start()
+    {
+        startPos = transform.position;
+        StartCoroutine(ShakePlayer());
+        // PlaySound
+    }
+
 
     public void Move(bool goRight)
     {
@@ -54,5 +68,24 @@ public class PlayerCharacter : MonoBehaviour
         Bullet bullet = Instantiate(bulletPrefab);
         bullet.transform.position = new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
         bullet.SetDirection(true);
+    }
+
+    IEnumerator ShakePlayer()
+    {
+        float timer = 0f;
+        float shakeIntensity = 0f;
+        while (timer < shakeDuration)
+        {
+            timer += Time.deltaTime;
+            shakeIntensity = maxShakeIntensity * shakeIntensityCurve.Evaluate(timer / shakeDuration);
+            //transform.position = startPos + shakeIntensity * new Vector2(
+            //    Mathf.PerlinNoise(speed * Time.time, 1),
+            //    Mathf.PerlinNoise(speed * Time.time, 2));
+
+            transform.position = startPos + UnityEngine.Random.insideUnitCircle * shakeIntensity;
+            yield return null;
+        }
+
+        transform.position = startPos;
     }
 }
