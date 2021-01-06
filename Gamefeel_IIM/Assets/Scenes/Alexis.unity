@@ -821,6 +821,16 @@ PrefabInstance:
       propertyPath: maxShakeIntensity
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 6978785350584749571, guid: 487df8043a161b84e943e450447657cb,
+        type: 3}
+      propertyPath: maxRecoil
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6978785350584749571, guid: 487df8043a161b84e943e450447657cb,
+        type: 3}
+      propertyPath: recoilDuration
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6978785350584749572, guid: 487df8043a161b84e943e450447657cb,
         type: 3}
       propertyPath: m_LocalPosition.x
