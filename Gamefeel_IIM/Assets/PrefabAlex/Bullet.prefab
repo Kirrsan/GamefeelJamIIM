@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5250396848859562764}
   - component: {fileID: 8523381368297768462}
   - component: {fileID: 5599687787017182125}
-  - component: {fileID: 6896929324345385584}
+  - component: {fileID: 5364555231971102257}
   m_Layer: 0
   m_Name: BulletSprite
   m_TagString: Untagged
@@ -99,7 +99,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.49999997
---- !u!114 &6896929324345385584
+--- !u!114 &5364555231971102257
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1760201315065526988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b587a63e4d9d78349a618c596d69897e, type: 3}
+  m_Script: {fileID: 11500000, guid: 915d8f2a86b0aa048a906a05a17b632e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6328486593424862628
