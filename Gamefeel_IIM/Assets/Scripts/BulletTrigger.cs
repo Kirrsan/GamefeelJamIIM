@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class BulletTrigger : MonoBehaviour
 {
+
+    public GameObject ScoreToDisplay;
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ennemy"))
         {
             collision.GetComponent<Enemies>().DestroyEnemy();
             GameManager.Instance.AddScore(10);
+            GameObject scoreText = Instantiate(ScoreToDisplay, collision.transform.position, Quaternion.identity);
             Destroy(this.transform.parent.gameObject);
         }
     }

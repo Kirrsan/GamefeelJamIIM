@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     
     public EnemyPack pack;
     public Text score;
+    public Text scoreNumber;
 
     private int currentScore = 0;
 
@@ -17,6 +18,15 @@ public class GameManager : MonoBehaviour
     public Button winButton;
     public GameObject losePanel;
     public Button loseButton;
+    
+    [Header("Score")]
+    public AnimationCurve scaleDown;
+    public float timeToScaleDown;
+    private float timer;
+
+    private Vector3 startScale;
+    public Vector3 finalScale;
+    private IEnumerator _scoreScaleCoroutine = null;
 
     // Start is called before the first frame update
     void Start()
@@ -49,12 +59,33 @@ public class GameManager : MonoBehaviour
     public void AddScore(int scoreToAdd)
     {
         currentScore += scoreToAdd;
-        score.text = currentScore.ToString();
+        scoreNumber.text = currentScore.ToString();
+        if (_scoreScaleCoroutine != null)
+        {
+            StopCoroutine(_scoreScaleCoroutine);
+        }
+        _scoreScaleCoroutine = ScoreBounce();
+        StartCoroutine(_scoreScaleCoroutine);
+    }    
+
+    private IEnumerator ScoreBounce()
+    {
+        startScale = scoreNumber.gameObject.transform.localScale;
+        while (timer < timeToScaleDown)
+        {
+            timer += Time.deltaTime;
+            float ratio = timer / timeToScaleDown;
+            float curveRatio = scaleDown.Evaluate(ratio);
+            scoreNumber.gameObject.transform.localScale = Vector3.Lerp(startScale, finalScale, curveRatio);
+            yield return null;
+        }
+
+        timer = 0;
     }
 
     public void ResetScore()
     {
-        score.text = 0 + "";
+        scoreNumber.text = 0 + "";
     }
 
     public void resetGame()

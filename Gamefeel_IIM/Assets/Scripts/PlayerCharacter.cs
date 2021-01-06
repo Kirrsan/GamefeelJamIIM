@@ -31,6 +31,8 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] float maxRecoil = 0.2f;
     [SerializeField] AnimationCurve recoilCurve;
 
+    public ParticleSystem bulletShootParticles;
+
     // Update is called once per frame
     void Update()
     {
@@ -47,6 +49,9 @@ public class PlayerCharacter : MonoBehaviour
     {
         startPos = transform.position;
         StartCoroutine(ShakePlayer());
+
+        bulletShootParticles.transform.position =
+            new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
         // PlaySound
     }
 
@@ -87,7 +92,8 @@ public class PlayerCharacter : MonoBehaviour
         bullet.SetDirection(true);
         bullet.SetObjectFiring(true);
         bullet.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
-
+        bulletShootParticles.Play();
+        
         StartCoroutine(ShootMovement());
     }
 
