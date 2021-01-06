@@ -9,6 +9,8 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] float maxXPosition = 8f;
     [SerializeField] float timeBetweenShoot = 1f;
 
+
+    private bool canMove = true;
     private float shootTimer = 0f;
     [SerializeField] float timeForLoadShoot = 3f;
 
@@ -25,6 +27,11 @@ public class PlayerCharacter : MonoBehaviour
         shootTimer += Time.deltaTime;
     }
 
+    public void SwitchMode()
+    {
+        canMove = !canMove;
+    }
+    
     public void Move(bool goRight)
     {
         Vector2 newPos = transform.position;
@@ -61,5 +68,10 @@ public class PlayerCharacter : MonoBehaviour
         bullet.SetDirection(true);
         bullet.SetObjectFiring(true);
         bullet.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
+    }
+
+    public bool GetCanMove()
+    {
+        return canMove;
     }
 }

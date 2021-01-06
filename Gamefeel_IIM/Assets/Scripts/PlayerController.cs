@@ -12,22 +12,28 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Movement
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && playerCharacter.GetCanMove())
         {
             playerCharacter.Move(true);
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow) && playerCharacter.GetCanMove())
         {
             playerCharacter.Move(false);
         }
+        
+        // Mode
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            playerCharacter.SwitchMode();
+        }
 
         // Shoot
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !playerCharacter.GetCanMove())
         {
             loadingShootTimer += Time.deltaTime;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space) && !playerCharacter.GetCanMove())
         {
             playerCharacter.Shoot(loadingShootTimer);
             loadingShootTimer = 0f;
