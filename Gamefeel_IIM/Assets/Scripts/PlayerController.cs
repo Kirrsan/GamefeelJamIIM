@@ -38,14 +38,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && !playerCharacter.GetCanMove())
         {
             loadingShootTimer += Time.deltaTime;
+            playerCharacter.SetShootHeldTimer(loadingShootTimer);
         }
 
         if (Input.GetKeyUp(KeyCode.Space) && !playerCharacter.GetCanMove())
         {
             if (shipAnim.GetBool("Shoot")) return;
-            playerCharacter.Shoot(loadingShootTimer, shipAnim);
+            // playerCharacter.Shoot(loadingShootTimer);
             shipAnim.SetBool("Shoot",true);
             loadingShootTimer = 0f;
+            playerCharacter.SetShootHeldTimer(loadingShootTimer);
         }
     }
 }
