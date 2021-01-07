@@ -167,7 +167,7 @@ public class EnemyPack : MonoBehaviour
     private void Move()
     {
         transform.position = new Vector2(transform.position.x + speedHorizontal * _orientation, transform.position.y);
-        
+        ResidualEffectAllEnnemies();
         if (!_hasMovedDown) return;
 
         currentMoveDownCount -= 1;
@@ -189,6 +189,7 @@ public class EnemyPack : MonoBehaviour
         yield return new WaitForSeconds(delayBeforeGoingDown);
         
         transform.position = new Vector2(transform.position.x, transform.position.y - speedVertical);
+        ResidualEffectAllEnnemies();
         ChangeDirection();
         stopHorizontalMovement = false;
     }
@@ -215,6 +216,21 @@ public class EnemyPack : MonoBehaviour
                 if (_enemies2DArray[i][j] != null)
                 {
                     _enemies2DArray[i][j].ChangeDirection(direction);
+                }
+            }
+        }
+    }
+
+
+    private void ResidualEffectAllEnnemies()
+    {
+        for (int i = 0; i < _enemies2DArray.Count; i++)
+        {
+            for (int j = 0; j < _enemies2DArray[i].Length; j++)
+            {
+                if (_enemies2DArray[i][j] != null)
+                {
+                    StartCoroutine(_enemies2DArray[i][j].EnnemyResidual(_enemies2DArray[i][j].transform.position));
                 }
             }
         }
