@@ -34,6 +34,9 @@ public class FeedbackController : MonoBehaviour
     public bool hasShootParticle = true;
     private Text ShootParticle;
 
+    public bool hasCrackEffect = true;
+    private Text Crack;
+
     private void Awake()
     {
         if (Instance == null)
@@ -59,6 +62,7 @@ public class FeedbackController : MonoBehaviour
         Score = pauseCanvas.transform.Find("Panel/Score").GetComponent<Text>();
         Vibrating = pauseCanvas.transform.Find("Panel/Vibrating").GetComponent<Text>();
         ShootParticle = pauseCanvas.transform.Find("Panel/ShootParticle").GetComponent<Text>();
+        Crack = pauseCanvas.transform.Find("Panel/Crack").GetComponent<Text>();
 
         UpdateText(Sparks, "Sparks (A)", hasSparksEffect);
         UpdateText(Smoke, "Smoke (Z)", hasSmokeEffect);
@@ -68,6 +72,7 @@ public class FeedbackController : MonoBehaviour
         UpdateText(Score, "Score (Y)", hasScoreEffect);
         UpdateText(Vibrating, "Vibrating on Start (U)", hasPlayerVibrating);
         UpdateText(ShootParticle, "ShootParticle (I)", hasShootParticle);
+        UpdateText(Crack, "Crack (O)", hasCrackEffect);
     }
 
     private void Update()
@@ -121,6 +126,12 @@ public class FeedbackController : MonoBehaviour
         {
             hasShootParticle = !hasShootParticle;
             UpdateText(ShootParticle, "ShootParticle (I)", hasShootParticle);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            hasCrackEffect = !hasCrackEffect;
+            UpdateText(Crack, "Crack (O)", hasCrackEffect);
         }
     }
 
