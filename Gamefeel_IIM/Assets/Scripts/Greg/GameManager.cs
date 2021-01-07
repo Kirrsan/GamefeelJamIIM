@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator _scoreScaleCoroutine = null;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (Instance == null)
         {

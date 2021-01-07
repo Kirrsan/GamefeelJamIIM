@@ -59,7 +59,9 @@ public class PlayerCharacter : MonoBehaviour
     private void Start()
     {
         startPos = transform.position;
-        StartCoroutine(ShakePlayer());
+
+        if (FeedbackController.Instance.hasPlayerVibrating)
+            StartCoroutine(ShakePlayer());
 
         bulletShootParticles.transform.position =
             new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
@@ -103,10 +105,12 @@ public class PlayerCharacter : MonoBehaviour
         bullet.SetDirection(true);
         bullet.SetObjectFiring(true);
         bullet.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
-        bulletShootParticles.Play();
 
-        
-        StartCoroutine(ShootMovement());
+        if (FeedbackController.Instance.hasShootParticle)
+            bulletShootParticles.Play();
+
+        if (FeedbackController.Instance.hasRecoilEffect)
+            StartCoroutine(ShootMovement());   
     }
 
     IEnumerator ShakePlayer()
