@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public PlayerCharacter playerCharacter;
 
     [SerializeField] float loadingShootTimer = 0f;
+    [SerializeField] Animator shipAnim;
 
     // Update is called once per frame
     void Update()
@@ -15,16 +16,22 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow) && playerCharacter.GetCanMove())
         {
             playerCharacter.Move(true);
+            shipAnim.SetInteger("Direction", 1);
         }
         else if (Input.GetKey(KeyCode.LeftArrow) && playerCharacter.GetCanMove())
         {
             playerCharacter.Move(false);
+            shipAnim.SetInteger("Direction", -1);
+        }
+        else
+        {
+            shipAnim.SetInteger("Direction", 0);
         }
         
         // Mode
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
-            playerCharacter.SwitchMode();
+            playerCharacter.StartCoroutine(playerCharacter.SwitchMode(shipAnim));
         }
 
         // Shoot
@@ -35,7 +42,9 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space) && !playerCharacter.GetCanMove())
         {
-            playerCharacter.Shoot(loadingShootTimer);
+            if (shipAnim.GetBool("Shoot")) return;
+            playerCharacter.Shoot(loadingShootTimer, shipAnim);
+            shipAnim.SetBool("Shoot",true);
             loadingShootTimer = 0f;
         }
     }

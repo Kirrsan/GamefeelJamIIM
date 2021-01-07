@@ -11,6 +11,7 @@ public class PlayerCharacter : MonoBehaviour
 
 
     private bool canMove = true;
+    private bool canShoot = false;
     private float shootTimer = 0f;
     [SerializeField] float timeForLoadShoot = 3f;
 
@@ -39,8 +40,18 @@ public class PlayerCharacter : MonoBehaviour
         shootTimer += Time.deltaTime;
     }
 
-    public void SwitchMode()
+    public IEnumerator SwitchMode(Animator anim)
     {
+        anim.SetTrigger("ChangeMode");
+        if (!canMove)
+        {
+            canShoot = false;
+            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        }
+        else
+        {
+            canShoot = true;
+        }
         canMove = !canMove;
     }
     
@@ -73,9 +84,9 @@ public class PlayerCharacter : MonoBehaviour
         transform.position = newPos;
     }
 
-    public void Shoot(float loadShootTimer)
+    public void Shoot(float loadShootTimer, Animator shipAnim)
     {
-        if (shootTimer < timeBetweenShoot) return;
+        if (shootTimer < timeBetweenShoot || !canShoot) return;
 
         shootTimer = 0f;
 
@@ -93,6 +104,7 @@ public class PlayerCharacter : MonoBehaviour
         bullet.SetObjectFiring(true);
         bullet.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
         bulletShootParticles.Play();
+
         
         StartCoroutine(ShootMovement());
     }
