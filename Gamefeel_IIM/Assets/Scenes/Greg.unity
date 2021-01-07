@@ -1563,7 +1563,7 @@ PrefabInstance:
     - target: {fileID: 4761046275182555116, guid: 88dfff1d4f5de024daf7d2efd1800654,
         type: 3}
       propertyPath: numberOfRows
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4761046275182555116, guid: 88dfff1d4f5de024daf7d2efd1800654,
         type: 3}
@@ -1573,17 +1573,37 @@ PrefabInstance:
     - target: {fileID: 4761046275182555116, guid: 88dfff1d4f5de024daf7d2efd1800654,
         type: 3}
       propertyPath: offsetX
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4761046275182555116, guid: 88dfff1d4f5de024daf7d2efd1800654,
         type: 3}
       propertyPath: offsetY
-      value: 0.5
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4761046275182555116, guid: 88dfff1d4f5de024daf7d2efd1800654,
+        type: 3}
+      propertyPath: speedHorizontal
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4761046275182555116, guid: 88dfff1d4f5de024daf7d2efd1800654,
+        type: 3}
+      propertyPath: speedVertical
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4761046275182555116, guid: 88dfff1d4f5de024daf7d2efd1800654,
+        type: 3}
+      propertyPath: delayBeforeGoingDown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4761046275182555116, guid: 88dfff1d4f5de024daf7d2efd1800654,
+        type: 3}
+      propertyPath: moveDownCountMax
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4761046275182555117, guid: 88dfff1d4f5de024daf7d2efd1800654,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.1
+      value: -1.95
       objectReference: {fileID: 0}
     - target: {fileID: 4761046275182555117, guid: 88dfff1d4f5de024daf7d2efd1800654,
         type: 3}

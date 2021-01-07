@@ -31,6 +31,9 @@ public class EnemyPack : MonoBehaviour
     private int _orientation = 1; //1 = right, -1 = left
 
     private bool _hasMovedDown = false;
+    private bool stopHorizontalMovement = false;
+    public int minMoveToGoDownAgain = 2;
+    private int currentMoveDownCount = 2;
     
     private int _randomColumnShooting = 0;
     private float _randomShootingTimer = 0;
@@ -52,7 +55,7 @@ public class EnemyPack : MonoBehaviour
             Enemies[] enemiesColumn = new Enemies[numberOfRows];
             for (int j = 0; j < numberOfRows; j++)
             {
-                GameObject newEnemy = GameObject.Instantiate(Enemy, new Vector2(transform.localPosition.x + offsetX * i, transform.localPosition.y - offsetY * j), quaternion.identity, this.transform);
+                GameObject newEnemy = GameObject.Instantiate(Enemy, new Vector2(transform.localPosition.x + offsetX * i, transform.localPosition.y - offsetY * j), Quaternion.identity, this.transform);
                 newEnemy.transform.localScale = enemyScale;
                 newEnemy.name = "Enemy " + i + " " + j;
                 enemiesColumn[j] = newEnemy.GetComponent<Enemies>();
@@ -65,6 +68,7 @@ public class EnemyPack : MonoBehaviour
         numberOfEnemies = numberOfColumns * numberOfRows;
         
         SetNewShootingTimer();
+        currentMoveDownCount = minMoveToGoDownAgain;
     }
 
     public void RemoveColumn(int columnId, int rowID)
@@ -110,6 +114,8 @@ public class EnemyPack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (stopHorizontalMovement) return;
+        
         _timer += Time.deltaTime;
         if(_timer >= timeBetweenMovement)
         {
@@ -118,6 +124,7 @@ public class EnemyPack : MonoBehaviour
             Debug.Log("Timer down");
             Debug.Log(_timer);
         }
+
 
         if (!_canShootTimerGoDown) return;
         _randomShootingTimer -= Time.deltaTime;
@@ -162,14 +169,18 @@ public class EnemyPack : MonoBehaviour
         transform.position = new Vector2(transform.position.x + speedHorizontal * _orientation, transform.position.y);
         
         if (!_hasMovedDown) return;
-        
+
+        currentMoveDownCount -= 1;
+        if (currentMoveDownCount > 0) return;
         _hasMovedDown = false;
+        currentMoveDownCount = minMoveToGoDownAgain;
     }
 
     public void MoveDown()
     {
         if (_hasMovedDown) return;
         _hasMovedDown = true;
+        stopHorizontalMovement = true;
         StartCoroutine(MoveDownCoroutine());
     }
     
@@ -179,6 +190,7 @@ public class EnemyPack : MonoBehaviour
         
         transform.position = new Vector2(transform.position.x, transform.position.y - speedVertical);
         ChangeDirection();
+        stopHorizontalMovement = false;
     }
 
     private void ChangeDirection()
