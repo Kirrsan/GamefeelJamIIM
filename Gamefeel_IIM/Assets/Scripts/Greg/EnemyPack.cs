@@ -143,8 +143,8 @@ public class EnemyPack : MonoBehaviour
         }
 
         if (enemyShooting != null)
-        {
-            enemyShooting.Shoot();
+        { 
+            enemyShooting.StartShoot();
         }
 
         SetNewShootingTimer();

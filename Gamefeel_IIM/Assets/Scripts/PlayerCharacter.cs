@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour
 {
-    public Bullet bulletPrefab;
+    public GameObject bulletPrefab;
     [SerializeField] float speed = 1f;
     [SerializeField] float maxXPosition = 8f;
     [SerializeField] float timeBetweenShoot = 1f;
@@ -98,11 +98,12 @@ public class PlayerCharacter : MonoBehaviour
         {
             Debug.Log("Big SHOOT !!");
         }
-        Bullet bullet = Instantiate(bulletPrefab);
+        GameObject bullet = Instantiate(bulletPrefab);
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
         bullet.transform.position = new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
-        bullet.SetDirection(true);
-        bullet.SetObjectFiring(true);
-        bullet.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
+        bulletScript.SetDirection(true);
+        bulletScript.SetObjectFiring(true);
+        bulletScript.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
         bulletShootParticles.Play();
 
         

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemies : MonoBehaviour
 {
-    [SerializeField] Bullet bulletPrefab;
+    [SerializeField] GameObject bulletPrefab;
     [SerializeField] float bulletPositionOffset;
     [SerializeField] Animator enemyAnim;
 
@@ -27,20 +27,26 @@ public class Enemies : MonoBehaviour
     {
         enemyAnim.SetInteger("Direction", direction);
     }
+
+    public void StartShoot()
+    {
+        enemyAnim.SetTrigger("Shoot");
+    }
     
     public void Shoot()
     {
-        Bullet bullet = Instantiate(bulletPrefab);
+        GameObject bullet = Instantiate(bulletPrefab);
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
         bullet.transform.position = new Vector2(transform.position.x, transform.position.y - bulletPositionOffset);
-        bullet.SetDirection(false);
-        bullet.SetObjectFiring(false);
-        enemyAnim.SetTrigger("Shoot");
+        bulletScript.SetDirection(false);
+        bulletScript.SetObjectFiring(false);
     }
 
     public void DestroyEnemy()
     {
         Debug.Log("Enemy destroyed");
         GameManager.Instance.pack.RemoveColumn(columnNumber, rowNumber);
+        GetComponent<BoxCollider2D>().enabled = false;
         enemyAnim.SetTrigger("Dead");
 
         // Destroy(this.gameObject);

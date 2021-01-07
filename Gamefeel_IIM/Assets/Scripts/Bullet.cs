@@ -11,7 +11,11 @@ public class Bullet : MonoBehaviour
     [SerializeField] float direction = 1f;
     [SerializeField] float intensity = 1f;
 
+
+    [SerializeField] Sprite sprites;
+    [SerializeField] GameObject particleSystems;
     [SerializeField] GameObject bulletSprite;
+    
     private float offsetToCenterX;
     private float offsetToCenterY;
     private float rotationSpeed;
@@ -89,7 +93,10 @@ public class Bullet : MonoBehaviour
         {
             direction = 1f;
         }
-        else direction = -1f;
+        else
+        {
+            direction = -1f;
+        }
     }
     
     public void SetObjectFiring(bool tempIsPlayerFiring)
