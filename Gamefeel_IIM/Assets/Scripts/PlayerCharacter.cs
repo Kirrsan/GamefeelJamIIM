@@ -34,6 +34,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] AnimationCurve recoilCurve;
 
     public ParticleSystem bulletShootParticles;
+    public ParticleSystem oilTrailParticles;
     public ParticleSystem[] shootReactorExplosion;
     public ParticleSystem[] ReactorMovementParticles;
 
@@ -87,8 +88,11 @@ public class PlayerCharacter : MonoBehaviour
         if (FeedbackController.Instance.hasPlayerVibrating)
             StartCoroutine(ShakePlayer());
 
-        bulletShootParticles.transform.position =
-            new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
+        if (FeedbackController.Instance.hasPlayerMovementParticle)
+        {
+            oilTrailParticles.gameObject.SetActive(false);
+        }
+
         // PlaySound
         
         for (int i = 0; i < ReactorMovementParticles.Length; i++)

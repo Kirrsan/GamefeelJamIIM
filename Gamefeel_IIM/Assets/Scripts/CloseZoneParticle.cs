@@ -5,13 +5,22 @@ using UnityEngine;
 public class CloseZoneParticle : MonoBehaviour
 {
     public GameObject particlesPrefab;
+    public GameObject oilPrefabToSetActive;
 
+    private bool isOilPrefabActive;
+
+    
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name.Contains("Bullet"))
         {
             if (FeedbackController.Instance.hasSparksEffect)
             {
+                if (!isOilPrefabActive)
+                {
+                    oilPrefabToSetActive.SetActive(true);
+                }
                 Vector2 position = this.gameObject.transform.position;
                 GameObject particle = Instantiate(particlesPrefab);
                 particle.transform.position = position;
@@ -20,6 +29,8 @@ public class CloseZoneParticle : MonoBehaviour
             
             if (FeedbackController.Instance.hasCrackEffect)
                 UIManager.Instance.AddCrack();
+            
+            
         }
     }
 }

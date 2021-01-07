@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     
     public EnemyPack pack;
-    public Text score;
     public Text scoreNumber;
 
     private int currentScore = 0;
