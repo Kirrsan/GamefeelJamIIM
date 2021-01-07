@@ -7,6 +7,7 @@ public class Enemies : MonoBehaviour
 {
     [SerializeField] Bullet bulletPrefab;
     [SerializeField] float bulletPositionOffset;
+    [SerializeField] Animator enemyAnim;
 
     private int columnNumber = 0;
     private int rowNumber = 0;
@@ -21,6 +22,11 @@ public class Enemies : MonoBehaviour
     {
         columnNumber -= 1;
     }
+
+    public void ChangeDirection(int direction)
+    {
+        enemyAnim.SetInteger("Direction", direction);
+    }
     
     public void Shoot()
     {
@@ -28,14 +34,16 @@ public class Enemies : MonoBehaviour
         bullet.transform.position = new Vector2(transform.position.x, transform.position.y - bulletPositionOffset);
         bullet.SetDirection(false);
         bullet.SetObjectFiring(false);
+        enemyAnim.SetTrigger("Shoot");
     }
 
     public void DestroyEnemy()
     {
         Debug.Log("Enemy destroyed");
         GameManager.Instance.pack.RemoveColumn(columnNumber, rowNumber);
-        
-        Destroy(this.gameObject);
+        enemyAnim.SetTrigger("Dead");
+
+        // Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
