@@ -28,7 +28,7 @@ public class EnemyPack : MonoBehaviour
     
     private float _timer = 0;
     
-    private float _orientation = 1; //1 = right, -1 = left
+    private int _orientation = 1; //1 = right, -1 = left
 
     private bool _hasMovedDown = false;
     
@@ -57,6 +57,7 @@ public class EnemyPack : MonoBehaviour
                 newEnemy.name = "Enemy " + i + " " + j;
                 enemiesColumn[j] = newEnemy.GetComponent<Enemies>();
                 enemiesColumn[j].SetIds(i, j);
+                enemiesColumn[j].ChangeDirection(_orientation);
             }
             _enemies2DArray.Add(enemiesColumn);
         }
@@ -189,6 +190,21 @@ public class EnemyPack : MonoBehaviour
         else
         {
             _orientation = 1;
+        }
+        ChangeDirectionForAllEnemiesLeft(_orientation);
+    }
+
+    private void ChangeDirectionForAllEnemiesLeft(int direction)
+    {
+        for (int i = 0; i < _enemies2DArray.Count; i++)
+        {
+            for (int j = 0; j < _enemies2DArray[i].Length; j++)
+            {
+                if (_enemies2DArray[i][j] != null)
+                {
+                    _enemies2DArray[i][j].ChangeDirection(direction);
+                }
+            }
         }
     }
     #endregion

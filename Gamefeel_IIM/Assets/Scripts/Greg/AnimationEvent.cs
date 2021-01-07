@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AnimationEvent : MonoBehaviour
 {
     public string animationBool;
     private Animator animator;
+
+    public UnityEvent eventToPlayOnAnimation;
+    public GameObject objectToDestroy;
     
     // Start is called before the first frame update
     void Start()
@@ -17,5 +21,16 @@ public class AnimationEvent : MonoBehaviour
     public void SetAnimationBoolFalse()
     {
         animator.SetBool(animationBool, false);
+    }
+
+
+    public void PlayEvent()
+    {
+        eventToPlayOnAnimation.Invoke();
+    }
+    
+    public void DestroyGameObject()
+    {
+        Destroy(objectToDestroy);
     }
 }
