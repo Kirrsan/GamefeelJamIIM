@@ -103,9 +103,9 @@ public class PlayerCharacter : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab);
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bullet.transform.position = new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
-        bullet.SetDirection(true);
-        bullet.SetObjectFiring(true);
-        bullet.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
+        bulletScript.SetDirection(true);
+        bulletScript.SetObjectFiring(true);
+        bulletScript.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
 
         if (FeedbackController.Instance.hasShootParticle)
             bulletShootParticles.Play();
