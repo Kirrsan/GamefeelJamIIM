@@ -10,11 +10,16 @@ public class CloseZoneParticle : MonoBehaviour
     {
         if (collision.gameObject.name.Contains("Bullet"))
         {
-            Vector2 position = this.gameObject.transform.position;
-            GameObject particle = Instantiate(particlesPrefab);
-            particle.transform.position = position;
-            UIManager.Instance.AddCrack();
-            Destroy(particle, 2f);
+            if (FeedbackController.Instance.hasSparksEffect)
+            {
+                Vector2 position = this.gameObject.transform.position;
+                GameObject particle = Instantiate(particlesPrefab);
+                particle.transform.position = position;
+                Destroy(particle, 2f);
+            }
+            
+            if (FeedbackController.Instance.hasCrackEffect)
+                UIManager.Instance.AddCrack();
         }
     }
 }

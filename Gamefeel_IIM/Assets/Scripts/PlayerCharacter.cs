@@ -59,7 +59,9 @@ public class PlayerCharacter : MonoBehaviour
     private void Start()
     {
         startPos = transform.position;
-        StartCoroutine(ShakePlayer());
+
+        if (FeedbackController.Instance.hasPlayerVibrating)
+            StartCoroutine(ShakePlayer());
 
         bulletShootParticles.transform.position =
             new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
@@ -101,13 +103,15 @@ public class PlayerCharacter : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab);
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bullet.transform.position = new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
-        bulletScript.SetDirection(true);
-        bulletScript.SetObjectFiring(true);
-        bulletScript.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
-        bulletShootParticles.Play();
+        bullet.SetDirection(true);
+        bullet.SetObjectFiring(true);
+        bullet.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
 
-        
-        StartCoroutine(ShootMovement());
+        if (FeedbackController.Instance.hasShootParticle)
+            bulletShootParticles.Play();
+
+        if (FeedbackController.Instance.hasRecoilEffect)
+            StartCoroutine(ShootMovement());   
     }
 
     IEnumerator ShakePlayer()
