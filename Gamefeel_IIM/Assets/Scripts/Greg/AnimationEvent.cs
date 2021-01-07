@@ -9,6 +9,8 @@ public class AnimationEvent : MonoBehaviour
     private Animator animator;
 
     public UnityEvent eventToPlayOnAnimation;
+    public UnityEvent eventToPlayShootMode;
+    public UnityEvent eventToPlayMoveMode;
     public GameObject objectToDestroy;
     
     // Start is called before the first frame update
@@ -27,6 +29,14 @@ public class AnimationEvent : MonoBehaviour
     public void PlayEvent()
     {
         eventToPlayOnAnimation.Invoke();
+    }    
+    public void PlayEventShootMode()
+    {
+        eventToPlayShootMode.Invoke();
+    }    
+    public void PlayEventMoveMode()
+    {
+        eventToPlayMoveMode.Invoke();
     }
     
     public void DestroyGameObject()

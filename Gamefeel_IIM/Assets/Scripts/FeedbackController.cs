@@ -33,6 +33,9 @@ public class FeedbackController : MonoBehaviour
 
     public bool hasShootParticle = true;
     private Text ShootParticle;
+    
+    public bool hasPlayerMovementParticle = true;
+    private Text PlayerMovementParticle;
 
     public bool hasCrackEffect = true;
     private Text Crack;

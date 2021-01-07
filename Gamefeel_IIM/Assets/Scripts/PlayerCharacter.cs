@@ -34,6 +34,8 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] AnimationCurve recoilCurve;
 
     public ParticleSystem bulletShootParticles;
+    public ParticleSystem[] shootReactorExplosion;
+    public ParticleSystem[] ReactorMovementParticles;
 
     // Update is called once per frame
     void Update()
@@ -47,13 +49,34 @@ public class PlayerCharacter : MonoBehaviour
         if (!canMove)
         {
             canShoot = false;
-            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * anim.GetCurrentAnimatorStateInfo(0).speed);
+            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length / anim.GetCurrentAnimatorStateInfo(0).speedMultiplier);
+            //TODO: change this to a specific bool
+            if(FeedbackController.Instance.hasShootParticle)
+            {
+                for (int i = 0; i < ReactorMovementParticles.Length; i++)
+                {
+                    ReactorMovementParticles[i].gameObject.SetActive(true);
+                }
+            }
         }
         else
         {
-            canShoot = true;
+            //TODO: change this to a specific bool
+            if (FeedbackController.Instance.hasShootParticle)
+            {
+                for (int i = 0; i < ReactorMovementParticles.Length; i++)
+                {
+                    ReactorMovementParticles[i].gameObject.SetActive(false);
+                }
+
+                canShoot = true;
+            }
         }
-        canMove = !canMove;
+    }
+
+    public void SetCanMove(bool value)
+    {
+        canMove = value;
     }
     
 
@@ -67,6 +90,11 @@ public class PlayerCharacter : MonoBehaviour
         bulletShootParticles.transform.position =
             new Vector2(transform.position.x, transform.position.y + bulletPositionOffset);
         // PlaySound
+        
+        for (int i = 0; i < ReactorMovementParticles.Length; i++)
+        {
+            ReactorMovementParticles[i].gameObject.SetActive(true);
+        }
     }
 
 
@@ -109,7 +137,13 @@ public class PlayerCharacter : MonoBehaviour
         bulletScript.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
 
         if (FeedbackController.Instance.hasShootParticle)
+        {
             bulletShootParticles.Play();
+            for (int i = 0; i < shootReactorExplosion.Length; i++)
+            {
+                shootReactorExplosion[i].Play();
+            }
+        }
 
         if (FeedbackController.Instance.hasRecoilEffect)
             StartCoroutine(ShootMovement());   
