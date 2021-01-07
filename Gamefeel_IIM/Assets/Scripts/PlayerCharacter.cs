@@ -52,7 +52,6 @@ public class PlayerCharacter : MonoBehaviour
         else
         {
             canShoot = true;
-            yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length * anim.GetCurrentAnimatorStateInfo(0).speed);
         }
         canMove = !canMove;
     }
