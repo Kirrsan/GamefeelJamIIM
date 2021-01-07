@@ -199,6 +199,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScoreToDisplay: {fileID: 4780507172659157527, guid: 31f2ec91e8a87304b96585c8abd2a1e4,
     type: 3}
+  hitShield: {fileID: 3504271196947753364, guid: 89650397dae2aa046adf537128c99c96,
+    type: 3}
 --- !u!70 &3059330351949794662
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

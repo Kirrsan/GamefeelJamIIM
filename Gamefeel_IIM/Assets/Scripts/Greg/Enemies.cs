@@ -106,6 +106,11 @@ public class Enemies : MonoBehaviour
         hasShield = false;
     }
 
+    public bool GetHasShield()
+    {
+        return hasShield;
+    }
+
     public IEnumerator EnnemyResidual(Vector2 newPos)
     {
         float tim = 0f;

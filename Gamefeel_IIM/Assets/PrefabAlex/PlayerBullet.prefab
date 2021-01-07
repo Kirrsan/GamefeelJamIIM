@@ -114,6 +114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScoreToDisplay: {fileID: 4780507172659157527, guid: 31f2ec91e8a87304b96585c8abd2a1e4,
     type: 3}
+  hitShield: {fileID: 3504271196947753364, guid: 89650397dae2aa046adf537128c99c96,
+    type: 3}
 --- !u!1 &6894373321114967261
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b25688cca5ccb6c46bd2be3aad323e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedBullet: 20
+  speedBullet: 4
   bulletSpeedX:
     serializedVersion: 2
     m_Curve:

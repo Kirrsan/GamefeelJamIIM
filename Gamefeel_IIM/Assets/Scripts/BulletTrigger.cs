@@ -6,12 +6,19 @@ public class BulletTrigger : MonoBehaviour
 {
 
     public GameObject ScoreToDisplay;
+    public GameObject hitShield;
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ennemy"))
         {
-            collision.GetComponent<Enemies>().DestroyEnemy();
+            Enemies enemyScript = collision.GetComponent<Enemies>();
+            enemyScript.DestroyEnemy();
+            if (enemyScript.GetHasShield())
+            {
+                GameObject shieldBreakEffect = Instantiate(hitShield, transform.position, Quaternion.identity);
+                Destroy(shieldBreakEffect, 1);
+            }
             GameManager.Instance.AddScore(10);
             GameObject scoreText = Instantiate(ScoreToDisplay, collision.transform.position, Quaternion.identity);
             Destroy(this.transform.parent.gameObject);
