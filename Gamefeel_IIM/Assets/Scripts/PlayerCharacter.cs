@@ -13,6 +13,7 @@ public class PlayerCharacter : MonoBehaviour
     private bool canMove = true;
     private bool canShoot = false;
     private float shootTimer = 0f;
+    private float shootHeldTimer = 0f;
     [SerializeField] float timeForLoadShoot = 3f;
 
     [SerializeField] float bulletPositionOffset = 1f;
@@ -86,13 +87,13 @@ public class PlayerCharacter : MonoBehaviour
         transform.position = newPos;
     }
 
-    public void Shoot(float loadShootTimer, Animator shipAnim)
+    public void Shoot()
     {
         if (shootTimer < timeBetweenShoot || !canShoot) return;
 
         shootTimer = 0f;
 
-        if (loadShootTimer < timeForLoadShoot)
+        if (shootHeldTimer < timeForLoadShoot)
         {
             Debug.Log("Small Shoot !");
         }
@@ -149,5 +150,10 @@ public class PlayerCharacter : MonoBehaviour
     public bool GetCanMove()
     {
         return canMove;
+    }
+
+    public void SetShootHeldTimer(float timer)
+    {
+        shootHeldTimer = timer;
     }
 }
