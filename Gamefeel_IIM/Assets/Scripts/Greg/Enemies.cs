@@ -12,6 +12,26 @@ public class Enemies : MonoBehaviour
     private int columnNumber = 0;
     private int rowNumber = 0;
 
+
+    private bool hasShield = true;
+    public GameObject shield;
+    private SpriteRenderer shieldSprite;
+    [SerializeField] float shieldExplositionDuration = 0.5f;
+    [SerializeField] float shieldExplosionRadius = 4f;
+
+
+    public GameObject ennemyResidual;
+    private Vector2 startPos;
+    float residualDuration = 0.3f;
+
+    private void Start()
+    {
+        shieldSprite = shield.GetComponent<SpriteRenderer>();
+
+        startPos = transform.position;
+    }
+
+
     public void SetIds(int tempColumnNumber, int tempRowNumber)
     {
         columnNumber = tempColumnNumber;
@@ -44,11 +64,17 @@ public class Enemies : MonoBehaviour
 
     public void DestroyEnemy()
     {
-        Debug.Log("Enemy destroyed");
-        GameManager.Instance.pack.RemoveColumn(columnNumber, rowNumber);
-        GetComponent<BoxCollider2D>().enabled = false;
-        enemyAnim.SetTrigger("Dead");
-
+        if (hasShield)
+        {
+            StartCoroutine(DestroyShield());
+        }
+        else
+        {
+            Debug.Log("Enemy destroyed");
+            GameManager.Instance.pack.RemoveColumn(columnNumber, rowNumber);
+            GetComponent<BoxCollider2D>().enabled = false;
+            enemyAnim.SetTrigger("Dead");
+        }
         // Destroy(this.gameObject);
     }
 
@@ -63,5 +89,32 @@ public class Enemies : MonoBehaviour
         {
             GameManager.Instance.loseGame();
         }
+    }
+
+    IEnumerator DestroyShield()
+    {
+        float timer = 0f;
+        float alpha = 1f;
+        while (timer < shieldExplositionDuration)
+        {
+            timer += Time.deltaTime;
+            shield.transform.localScale = Vector3.Lerp(Vector3.one, shieldExplosionRadius * Vector3.one, timer / shieldExplositionDuration);
+            alpha = Mathf.Lerp(1f, 0f, timer / shieldExplositionDuration);
+            shieldSprite.color = new Color(1f, 1f, 1f, alpha);
+            yield return null;
+        }
+        hasShield = false;
+    }
+
+    public IEnumerator EnnemyResidual(Vector2 newPos)
+    {
+        float tim = 0f;
+        while (tim < residualDuration)
+        {
+            tim += Time.deltaTime;
+            ennemyResidual.transform.position = Vector2.Lerp(startPos, newPos, tim / residualDuration);
+            yield return null;
+        }
+        startPos = newPos;
     }
 }
