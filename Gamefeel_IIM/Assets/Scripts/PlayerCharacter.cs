@@ -41,6 +41,8 @@ public class PlayerCharacter : MonoBehaviour
 
     public AudioSource engineStartSound;
     public AudioSource swithModeSound;
+    public AudioSource playerShootSound;
+
 
     // Update is called once per frame
     void Update()
@@ -161,14 +163,13 @@ public class PlayerCharacter : MonoBehaviour
         if (FeedbackController.Instance.hasPlayerShootEffect)
         {
             bulletShootParticles.Play();
+            playerShootSound.Play();
             for (int i = 0; i < shootReactorExplosion.Length; i++)
             {
                 shootReactorExplosion[i].Play();
             }
-        }
-
-        if (FeedbackController.Instance.hasPlayerShootEffect)
-            StartCoroutine(ShootMovement());   
+            StartCoroutine(ShootMovement());
+        }               
     }
 
     IEnumerator ShakePlayer()

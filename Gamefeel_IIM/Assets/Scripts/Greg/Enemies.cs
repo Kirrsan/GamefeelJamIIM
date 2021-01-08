@@ -60,7 +60,7 @@ public class Enemies : MonoBehaviour
         if (FeedbackController.Instance.hasEnemyShootEffect)
         {
             enemyAnim.SetTrigger("Shoot");
-            ennemyShoot.Play();
+            ennemyShoot.PlayDelayed(0.7f);
         }
         else
         {

@@ -779,7 +779,7 @@ MonoBehaviour:
   shieldSound: {fileID: 4548249206545704157}
   ennemyImpact: {fileID: 3779507488082572643}
   ennemyShoot: {fileID: 7155907389920316451}
-  ennemyFallSound: {fileID: 0}
+  ennemyFallSound: {fileID: 221578357374647567}
 --- !u!61 &616665392
 BoxCollider2D:
   m_ObjectHideFlags: 0
