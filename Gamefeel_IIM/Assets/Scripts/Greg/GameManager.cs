@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +42,14 @@ public class GameManager : MonoBehaviour
         
         winButton.onClick.AddListener(() => resetGame());
         loseButton.onClick.AddListener(() => resetGame());
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            resetGame();
+        }
     }
 
     public void winGame()

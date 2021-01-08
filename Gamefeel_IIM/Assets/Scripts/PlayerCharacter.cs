@@ -187,7 +187,7 @@ public class PlayerCharacter : MonoBehaviour
             transform.position = startPos + UnityEngine.Random.insideUnitCircle * shakeIntensity;
             yield return null;
         }
-
+        engineStartSound.Stop();
         transform.position = startPos;
     }
 
