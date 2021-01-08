@@ -43,7 +43,6 @@ public class EnemyPack : MonoBehaviour
     
     public float minimumTimeToShootAgain = 1;
     public float maximumTimeToShootAgain = 5;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -167,7 +166,10 @@ public class EnemyPack : MonoBehaviour
     private void Move()
     {
         transform.position = new Vector2(transform.position.x + speedHorizontal * _orientation, transform.position.y);
-        ResidualEffectAllEnnemies();
+        if (FeedbackController.Instance.hasEnemyMovementParticle)
+        {
+            ResidualEffectAllEnnemies();
+        }
         if (!_hasMovedDown) return;
 
         currentMoveDownCount -= 1;
@@ -189,7 +191,10 @@ public class EnemyPack : MonoBehaviour
         yield return new WaitForSeconds(delayBeforeGoingDown);
         
         transform.position = new Vector2(transform.position.x, transform.position.y - speedVertical);
-        ResidualEffectAllEnnemies();
+        if (FeedbackController.Instance.hasEnemyMovementParticle)
+        {
+            ResidualEffectAllEnnemies();
+        }
         ChangeDirection();
         stopHorizontalMovement = false;
     }

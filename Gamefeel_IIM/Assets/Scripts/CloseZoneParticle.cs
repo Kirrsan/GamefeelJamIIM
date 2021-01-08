@@ -9,13 +9,16 @@ public class CloseZoneParticle : MonoBehaviour
 
     private bool isOilPrefabActive;
 
-    
+    public void ActiveOil(bool value)
+    {
+        oilPrefabToSetActive.SetActive(value);
+    }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name.Contains("Bullet"))
         {
-            if (FeedbackController.Instance.hasSparksEffect)
+            if (FeedbackController.Instance.hasPlayerMovementParticle)
             {
                 if (!isOilPrefabActive)
                 {
@@ -27,7 +30,7 @@ public class CloseZoneParticle : MonoBehaviour
                 Destroy(particle, 2f);
             }
             
-            if (FeedbackController.Instance.hasCrackEffect)
+            if (FeedbackController.Instance.hasUIEffect)
                 UIManager.Instance.AddCrack();
             
             

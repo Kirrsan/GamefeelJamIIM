@@ -50,7 +50,14 @@ public class Enemies : MonoBehaviour
 
     public void StartShoot()
     {
-        enemyAnim.SetTrigger("Shoot");
+        if (FeedbackController.Instance.hasEnemyShootEffect)
+        {
+            enemyAnim.SetTrigger("Shoot");
+        }
+        else
+        {
+            Shoot();
+        }
     }
     
     public void Shoot()
@@ -86,6 +93,10 @@ public class Enemies : MonoBehaviour
             //Debug.Log("walltouched");
         }
         else if (other.CompareTag("Player"))
+        {
+            GameManager.Instance.loseGame();
+        }        
+        else if (other.CompareTag("Lose"))
         {
             GameManager.Instance.loseGame();
         }

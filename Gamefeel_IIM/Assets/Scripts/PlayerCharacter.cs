@@ -44,6 +44,17 @@ public class PlayerCharacter : MonoBehaviour
         shootTimer += Time.deltaTime;
     }
 
+    public void CheckIfCanMove()
+    {
+        if (canMove)
+        {
+            for (int i = 0; i < ReactorMovementParticles.Length; i++)
+            {
+                ReactorMovementParticles[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
     public IEnumerator SwitchMode(Animator anim)
     {
         anim.SetTrigger("ChangeMode");
@@ -51,8 +62,7 @@ public class PlayerCharacter : MonoBehaviour
         {
             canShoot = false;
             yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length / anim.GetCurrentAnimatorStateInfo(0).speedMultiplier);
-            //TODO: change this to a specific bool
-            if(FeedbackController.Instance.hasShootParticle)
+            if(FeedbackController.Instance.hasPlayerMovementParticle)
             {
                 for (int i = 0; i < ReactorMovementParticles.Length; i++)
                 {
@@ -62,16 +72,14 @@ public class PlayerCharacter : MonoBehaviour
         }
         else
         {
-            //TODO: change this to a specific bool
-            if (FeedbackController.Instance.hasShootParticle)
+            if (FeedbackController.Instance.hasPlayerMovementParticle)
             {
                 for (int i = 0; i < ReactorMovementParticles.Length; i++)
                 {
                     ReactorMovementParticles[i].gameObject.SetActive(false);
                 }
-
-                canShoot = true;
             }
+            canShoot = true;
         }
     }
 
@@ -85,13 +93,8 @@ public class PlayerCharacter : MonoBehaviour
     {
         startPos = transform.position;
 
-        if (FeedbackController.Instance.hasPlayerVibrating)
-            StartCoroutine(ShakePlayer());
-
         if (FeedbackController.Instance.hasPlayerMovementParticle)
-        {
-            oilTrailParticles.gameObject.SetActive(false);
-        }
+            StartCoroutine(ShakePlayer());
 
         // PlaySound
         
@@ -104,6 +107,14 @@ public class PlayerCharacter : MonoBehaviour
 
     public void Move(bool goRight)
     {
+        if (FeedbackController.Instance.hasPlayerMovementParticle && !oilTrailParticles.gameObject.activeSelf)
+        {
+            oilTrailParticles.gameObject.SetActive(true);
+        }
+        else if (!FeedbackController.Instance.hasPlayerMovementParticle && oilTrailParticles.gameObject.activeSelf)
+        {
+            oilTrailParticles.gameObject.SetActive(false);
+        }
         Vector2 newPos = transform.position;
         if (goRight)
         {
@@ -140,7 +151,7 @@ public class PlayerCharacter : MonoBehaviour
         bulletScript.SetObjectFiring(true);
         bulletScript.SetParameters(spriteOffsetToCenterX, spriteOffsetToCenterY, rotationSpeed);
 
-        if (FeedbackController.Instance.hasShootParticle)
+        if (FeedbackController.Instance.hasPlayerShootEffect)
         {
             bulletShootParticles.Play();
             for (int i = 0; i < shootReactorExplosion.Length; i++)
@@ -149,7 +160,7 @@ public class PlayerCharacter : MonoBehaviour
             }
         }
 
-        if (FeedbackController.Instance.hasRecoilEffect)
+        if (FeedbackController.Instance.hasPlayerShootEffect)
             StartCoroutine(ShootMovement());   
     }
 

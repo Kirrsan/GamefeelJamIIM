@@ -50,6 +50,7 @@ public class UIManager : MonoBehaviour
         CracksLeftToAdd.Clear();
         for (int i = 0; i < Cracks.Length; i++)
         {
+            Cracks[i].gameObject.SetActive(false);
             CracksLeftToAdd.Add(Cracks[i]);
         }
     }

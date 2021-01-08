@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class FeedbackController : MonoBehaviour
@@ -10,35 +11,27 @@ public class FeedbackController : MonoBehaviour
     public GameObject pauseCanvas;
     private Button returnButton;
 
-    public bool hasSparksEffect = true;
-    private Text Sparks;
-
-    public bool hasSmokeEffect = true;
-    private Text Smoke;
-
-    public bool hasBulletRotating = true;
-    private Text ShootRotating;
-
-    public bool hasBulletTrail = true;
-    private Text BulletTrail;
-
-    public bool hasRecoilEffect = true;
-    private Text Recoil;
-
-    public bool hasScoreEffect = true;
-    private Text Score;
-
-    public bool hasPlayerVibrating = true;
-    private Text Vibrating;
-
-    public bool hasShootParticle = true;
-    private Text ShootParticle;
+    public UnityEvent onPlayerMovementDeactivationEvent;
+    public UnityEvent onPlayerMovementActivationEvent;
+    public UnityEvent onUIDeactivationEvent;
     
     public bool hasPlayerMovementParticle = true;
     private Text PlayerMovementParticle;
-
-    public bool hasCrackEffect = true;
-    private Text Crack;
+    
+    public bool hasPlayerShootEffect = true;
+    private Text PlayerShootEffect;
+    
+    public bool hasEnemyMovementParticle = true;
+    private Text EnemyMovementParticle;
+    
+    public bool hasEnemyShootEffect = true;
+    private Text EnemyShootEffect;
+    
+    public bool hasBackgroundEffect = true;
+    private Text BackgroundEffect;
+    
+    public bool hasUIEffect = true;
+    private Text UIEffect;
 
     private void Awake()
     {
@@ -57,25 +50,20 @@ public class FeedbackController : MonoBehaviour
         returnButton = pauseCanvas.transform.Find("ReturnButton").GetComponent<Button>();
         returnButton.onClick.AddListener(() => PausePlay());
 
-        Sparks = pauseCanvas.transform.Find("Panel/Sparks").GetComponent<Text>();
-        Smoke = pauseCanvas.transform.Find("Panel/Smoke").GetComponent<Text>();
-        ShootRotating = pauseCanvas.transform.Find("Panel/ShootRotating").GetComponent<Text>();
-        BulletTrail = pauseCanvas.transform.Find("Panel/BulletTrail").GetComponent<Text>();
-        Recoil = pauseCanvas.transform.Find("Panel/Recoil").GetComponent<Text>();
-        Score = pauseCanvas.transform.Find("Panel/Score").GetComponent<Text>();
-        Vibrating = pauseCanvas.transform.Find("Panel/Vibrating").GetComponent<Text>();
-        ShootParticle = pauseCanvas.transform.Find("Panel/ShootParticle").GetComponent<Text>();
-        Crack = pauseCanvas.transform.Find("Panel/Crack").GetComponent<Text>();
+        PlayerMovementParticle = pauseCanvas.transform.Find("Panel/PlayerMovementParticles").GetComponent<Text>();
+        PlayerShootEffect = pauseCanvas.transform.Find("Panel/PlayerShootEffect").GetComponent<Text>();
+        EnemyMovementParticle = pauseCanvas.transform.Find("Panel/EnemyMovementParticle").GetComponent<Text>();
+        EnemyShootEffect = pauseCanvas.transform.Find("Panel/EnemyShootEffect").GetComponent<Text>();
+        BackgroundEffect = pauseCanvas.transform.Find("Panel/BackgroundEffect").GetComponent<Text>();
+        UIEffect = pauseCanvas.transform.Find("Panel/UIEffect").GetComponent<Text>();
 
-        UpdateText(Sparks, "Sparks (A)", hasSparksEffect);
-        UpdateText(Smoke, "Smoke (Z)", hasSmokeEffect);
-        UpdateText(ShootRotating, "ShootRotating (E)", hasBulletRotating);
-        UpdateText(BulletTrail, "BulletTrail (R)", hasBulletTrail);
-        UpdateText(Recoil, "Recoil on Shoot (T)", hasRecoilEffect);
-        UpdateText(Score, "Score (Y)", hasScoreEffect);
-        UpdateText(Vibrating, "Vibrating on Start (U)", hasPlayerVibrating);
-        UpdateText(ShootParticle, "ShootParticle (I)", hasShootParticle);
-        UpdateText(Crack, "Crack (O)", hasCrackEffect);
+
+        UpdateText(PlayerMovementParticle, "PlayerMovementParticle (A)", hasPlayerMovementParticle);
+        UpdateText(PlayerShootEffect, "PlayerShootEffect (Z)", hasPlayerShootEffect);
+        UpdateText(EnemyMovementParticle, "EnemyMovementParticle (E)", hasEnemyMovementParticle);
+        UpdateText(EnemyShootEffect, "EnemyShootEffect (R)", hasEnemyShootEffect);
+        UpdateText(BackgroundEffect, "BackgroundEffect (T)", hasBackgroundEffect);
+        UpdateText(UIEffect, "UIEffect (Y)", hasUIEffect);
     }
 
     private void Update()
@@ -85,56 +73,50 @@ public class FeedbackController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            hasSparksEffect = !hasSparksEffect;
-            UpdateText(Sparks, "Sparks (A)", hasSparksEffect);
+            hasPlayerMovementParticle = !hasPlayerMovementParticle;
+            if (!hasPlayerMovementParticle)
+            {
+                onPlayerMovementDeactivationEvent.Invoke();
+            }
+            else
+            {
+                onPlayerMovementActivationEvent.Invoke();
+            }
+            UpdateText(PlayerMovementParticle, "PlayerMovementParticle (A)", hasPlayerMovementParticle);
         }
         
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            hasSmokeEffect = !hasSmokeEffect;
-            UpdateText(Smoke, "Smoke (Z)", hasSmokeEffect);
+            hasPlayerShootEffect = !hasPlayerShootEffect;
+            UpdateText(PlayerShootEffect, "PlayerShootEffect (Z)", hasPlayerShootEffect);
         }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            hasBulletRotating = !hasBulletRotating;
-            UpdateText(ShootRotating, "ShootRotating (E)", hasBulletRotating);
+            hasEnemyMovementParticle = !hasEnemyMovementParticle;
+            UpdateText(EnemyMovementParticle, "EnemyMovementParticle (E)", hasEnemyMovementParticle);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            hasBulletTrail = !hasBulletTrail;
-            UpdateText(BulletTrail, "BulletTrail (R)", hasBulletTrail);
+            hasEnemyShootEffect = !hasEnemyShootEffect;
+            UpdateText(EnemyShootEffect, "EnemyShootEffect (R)", hasEnemyShootEffect);
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            hasRecoilEffect = !hasRecoilEffect;
-            UpdateText(Recoil, "Recoil on Shoot (T)", hasRecoilEffect);
+            hasBackgroundEffect = !hasBackgroundEffect;
+            UpdateText(BackgroundEffect, "BackgroundEffect (T)", hasBackgroundEffect);
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            hasScoreEffect = !hasScoreEffect;
-            UpdateText(Score, "Score (Y)", hasScoreEffect);
-        }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            hasPlayerVibrating = !hasPlayerVibrating;
-            UpdateText(Vibrating, "Vibrating on Start (U)", hasPlayerVibrating);
-        }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            hasShootParticle = !hasShootParticle;
-            UpdateText(ShootParticle, "ShootParticle (I)", hasShootParticle);
-        }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            hasCrackEffect = !hasCrackEffect;
-            UpdateText(Crack, "Crack (O)", hasCrackEffect);
+            hasUIEffect = !hasUIEffect;
+            if (!hasUIEffect)
+            {
+                onUIDeactivationEvent.Invoke();
+            }
+            UpdateText(UIEffect, "UIEffect (Y)", hasUIEffect);
         }
     }
 

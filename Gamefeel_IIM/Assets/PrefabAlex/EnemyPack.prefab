@@ -43,15 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0290fca8e1ef824b8e7fc6580c985d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfRows: 2
-  numberOfColumns: 2
-  offsetX: 0.4
-  offsetY: 0.4
+  numberOfRows: 3
+  numberOfColumns: 5
+  offsetX: 0.75
+  offsetY: 0.75
   Enemy: {fileID: 7708470637651245060, guid: 6e5c349e362418b45914535194d65d29, type: 3}
-  speedHorizontal: 1
-  speedVertical: 1
-  delayBeforeGoingDown: 0.4
+  speedHorizontal: 0.5
+  speedVertical: 0.5
+  delayBeforeGoingDown: 1
   timeBetweenMovement: 1
   enemyScale: {x: 0.3, y: 0.3}
+  minMoveToGoDownAgain: 2
   minimumTimeToShootAgain: 1
   maximumTimeToShootAgain: 4

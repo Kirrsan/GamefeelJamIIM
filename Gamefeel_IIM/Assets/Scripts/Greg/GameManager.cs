@@ -59,12 +59,16 @@ public class GameManager : MonoBehaviour
     {
         currentScore += scoreToAdd;
         scoreNumber.text = currentScore.ToString();
-        if (_scoreScaleCoroutine != null)
+        
+        if (FeedbackController.Instance.hasUIEffect)
         {
-            StopCoroutine(_scoreScaleCoroutine);
+            if (_scoreScaleCoroutine != null)
+            {
+                StopCoroutine(_scoreScaleCoroutine);
+            }
+            _scoreScaleCoroutine = ScoreBounce();
+            StartCoroutine(_scoreScaleCoroutine);
         }
-        _scoreScaleCoroutine = ScoreBounce();
-        StartCoroutine(_scoreScaleCoroutine);
     }    
 
     private IEnumerator ScoreBounce()

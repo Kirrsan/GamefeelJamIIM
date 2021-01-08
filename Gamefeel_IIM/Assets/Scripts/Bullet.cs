@@ -24,9 +24,16 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        if (!_isPlayerFiring) return;
-        bulletSprite.transform.position = new Vector2(bulletSprite.transform.position.x + offsetToCenterX,
-            bulletSprite.transform.position.y + offsetToCenterY);
+        if (!FeedbackController.Instance.hasEnemyShootEffect && !_isPlayerFiring)
+        {
+            particleSystems.gameObject.SetActive(false);
+        }
+        else if (!FeedbackController.Instance.hasPlayerShootEffect && _isPlayerFiring)
+        {
+            particleSystems.gameObject.SetActive(false);
+            bulletSprite.transform.position = new Vector2(bulletSprite.transform.position.x + offsetToCenterX,
+                bulletSprite.transform.position.y + offsetToCenterY);
+        }
     }
 
     public void SetParameters(float offsetX, float offsetY, float tempRotationSpeed)
@@ -45,7 +52,7 @@ public class Bullet : MonoBehaviour
         timerSpeedX += (Mathf.Sin(Time.time) + 1) * 0.5f;
         transform.position = newPos;
 
-        if (!_isPlayerFiring) return;
+        if ((!FeedbackController.Instance.hasPlayerShootEffect && _isPlayerFiring) || !_isPlayerFiring) return;
 
         Vector2 newPosSprite = bulletSprite.transform.position;
         newPosSprite.x += bulletSpeedX.Evaluate(timerSpeedX) * Time.deltaTime * intensity;

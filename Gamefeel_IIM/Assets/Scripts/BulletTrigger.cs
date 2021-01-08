@@ -14,13 +14,16 @@ public class BulletTrigger : MonoBehaviour
         {
             Enemies enemyScript = collision.GetComponent<Enemies>();
             enemyScript.DestroyEnemy();
-            if (enemyScript.GetHasShield())
+            if (FeedbackController.Instance.hasPlayerShootEffect && enemyScript.GetHasShield())
             {
                 GameObject shieldBreakEffect = Instantiate(hitShield, transform.position, Quaternion.identity);
                 Destroy(shieldBreakEffect, 1);
             }
             GameManager.Instance.AddScore(10);
-            GameObject scoreText = Instantiate(ScoreToDisplay, collision.transform.position, Quaternion.identity);
+            if (FeedbackController.Instance.hasUIEffect)
+            {
+                GameObject scoreText = Instantiate(ScoreToDisplay, collision.transform.position, Quaternion.identity);
+            }
             Destroy(this.transform.parent.gameObject);
         }
     }

@@ -10,6 +10,7 @@ TagManager:
   - scroll
   - endScroll
   - Bullet
+  - Lose
   layers:
   - Default
   - TransparentFX

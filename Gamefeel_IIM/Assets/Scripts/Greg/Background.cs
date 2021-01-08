@@ -17,9 +17,12 @@ public class Background : MonoBehaviour
 
     private void Update()
     {
-        Vector2 pos = transform.position;
-        pos.y += speed * Time.deltaTime;
-        transform.position = pos;
+        if (FeedbackController.Instance.hasBackgroundEffect)
+        {
+            Vector2 pos = transform.position;
+            pos.y += speed * Time.deltaTime;
+            transform.position = pos;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
