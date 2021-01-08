@@ -24,6 +24,13 @@ public class Enemies : MonoBehaviour
     private Vector2 startPos;
     float residualDuration = 0.3f;
 
+
+    public AudioSource shieldSound;
+    public AudioSource ennemyImpact;
+    public AudioSource ennemyShoot;
+    public AudioSource ennemyFallSound;
+
+
     private void Start()
     {
         shieldSprite = shield.GetComponent<SpriteRenderer>();
@@ -53,6 +60,7 @@ public class Enemies : MonoBehaviour
         if (FeedbackController.Instance.hasEnemyShootEffect)
         {
             enemyAnim.SetTrigger("Shoot");
+            ennemyShoot.Play();
         }
         else
         {
@@ -73,6 +81,10 @@ public class Enemies : MonoBehaviour
     {
         if (hasShield)
         {
+            if (FeedbackController.Instance.hasEnemyMovementParticle)
+            {
+                shieldSound.Play();
+            }
             StartCoroutine(DestroyShield());
         }
         else
@@ -81,6 +93,11 @@ public class Enemies : MonoBehaviour
             GameManager.Instance.pack.RemoveColumn(columnNumber, rowNumber);
             GetComponent<BoxCollider2D>().enabled = false;
             enemyAnim.SetTrigger("Dead");
+            if (FeedbackController.Instance.hasEnemyMovementParticle)
+            {
+                ennemyFallSound.Play();
+                ennemyImpact.PlayDelayed(1f);
+            }
         }
         // Destroy(this.gameObject);
     }

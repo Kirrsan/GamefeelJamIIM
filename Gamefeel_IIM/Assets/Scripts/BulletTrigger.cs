@@ -7,7 +7,9 @@ public class BulletTrigger : MonoBehaviour
 
     public GameObject ScoreToDisplay;
     public GameObject hitShield;
-    
+
+    public AudioSource playerImpactSound;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Ennemy"))
@@ -36,6 +38,11 @@ public class BulletTrigger : MonoBehaviour
             // collision.gameObject.GetComponent<PlayerCharacter>().DestroyPlayer;
             // GameManager.Instance.Lose();
             Debug.Log("Player Hit !");
+
+            if (FeedbackController.Instance.hasPlayerMovementParticle)
+            {
+                playerImpactSound.Play();
+            }
             GameManager.Instance.loseGame();
         }
         /*

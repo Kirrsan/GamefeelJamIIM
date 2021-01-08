@@ -38,6 +38,10 @@ public class PlayerCharacter : MonoBehaviour
     public ParticleSystem[] shootReactorExplosion;
     public ParticleSystem[] ReactorMovementParticles;
 
+
+    public AudioSource engineStartSound;
+    public AudioSource swithModeSound;
+
     // Update is called once per frame
     void Update()
     {
@@ -64,6 +68,7 @@ public class PlayerCharacter : MonoBehaviour
             yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length / anim.GetCurrentAnimatorStateInfo(0).speedMultiplier);
             if(FeedbackController.Instance.hasPlayerMovementParticle)
             {
+                swithModeSound.Play();
                 for (int i = 0; i < ReactorMovementParticles.Length; i++)
                 {
                     ReactorMovementParticles[i].gameObject.SetActive(true);
@@ -94,9 +99,10 @@ public class PlayerCharacter : MonoBehaviour
         startPos = transform.position;
 
         if (FeedbackController.Instance.hasPlayerMovementParticle)
+        {
             StartCoroutine(ShakePlayer());
-
-        // PlaySound
+            engineStartSound.Play();
+        }
         
         for (int i = 0; i < ReactorMovementParticles.Length; i++)
         {
