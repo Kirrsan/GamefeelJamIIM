@@ -50,9 +50,9 @@ MonoBehaviour:
   Enemy: {fileID: 7708470637651245060, guid: 6e5c349e362418b45914535194d65d29, type: 3}
   speedHorizontal: 0.5
   speedVertical: 0.5
-  delayBeforeGoingDown: 1
-  timeBetweenMovement: 1
+  delayBeforeGoingDown: 2
+  timeBetweenMovement: 2
   enemyScale: {x: 0.3, y: 0.3}
   minMoveToGoDownAgain: 2
   minimumTimeToShootAgain: 1
-  maximumTimeToShootAgain: 4
+  maximumTimeToShootAgain: 1.5

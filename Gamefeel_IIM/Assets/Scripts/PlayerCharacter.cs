@@ -113,6 +113,7 @@ public class PlayerCharacter : MonoBehaviour
 
     public void Move(bool goRight)
     {
+        if(!canMove) return;
         if (FeedbackController.Instance.hasPlayerMovementParticle && !oilTrailParticles.gameObject.activeSelf)
         {
             oilTrailParticles.gameObject.SetActive(true);
